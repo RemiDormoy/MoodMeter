@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "473480823368",
+    "firebase_url": "https://moodmeter-de48d.firebaseio.com",
+    "project_id": "moodmeter-de48d",
+    "storage_bucket": "moodmeter-de48d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:473480823368:android:54782339f5ba898f",
+        "android_client_info": {
+          "package_name": "com.rdo.octo.moodmeter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "473480823368-60ethhp5v5d2skbaghvohr8bg33lgc2k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqZets4nDDVhFRmfw2Hb1-meGVsz4Sq3A"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
