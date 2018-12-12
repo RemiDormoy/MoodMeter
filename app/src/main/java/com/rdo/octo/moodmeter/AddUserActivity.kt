@@ -11,11 +11,11 @@ import kotlinx.android.synthetic.main.activity_add_user.*
 class AddUserActivity : AppCompatActivity() {
 
     companion object {
-        const val PREF_USER_NAME = "bzrebuvibzreiv"
-        const val PREF_USER_AVATAR = "bzrebuvibzreiv"
+        const val PREF_USER_NAME = "lolilol le nom"
+        const val PREF_USER_AVATAR = "lolilol le avatar"
 
         fun getName(context: Context): String? {
-            return context.getSharedPreferences("com.octo.rdo.moodmeter", Context.MODE_PRIVATE).getString(PREF_USER_NAME, "empty")
+            return context.getSharedPreferences("com.octo.rdo.moodmeter", Context.MODE_PRIVATE).getString(PREF_USER_NAME, null)
         }
         fun getAvatar(context: Context): Int {
             return context.getSharedPreferences("com.octo.rdo.moodmeter", Context.MODE_PRIVATE).getInt(PREF_USER_AVATAR, 1)

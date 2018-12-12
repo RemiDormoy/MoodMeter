@@ -25,6 +25,7 @@
         </service>
         <activity android:name=".MainActivity"/>
         <activity android:name=".AddUserActivity"/>
+        <activity android:name=".StartRetroActivity"/>
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_channel_id"
                 android:value="@string/default_notification_channel_id" />
