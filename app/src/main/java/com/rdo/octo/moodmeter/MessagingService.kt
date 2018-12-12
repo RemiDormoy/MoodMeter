@@ -33,7 +33,7 @@ class MessagingService : FirebaseMessagingService() {
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .build()
         NotificationManagerCompat.from(this).notify(12, notification)*/
-        startActivity(MainActivity.newIntent(this, p0.data["question"]))
+        startActivity(MainActivity.newIntent(this, p0.data["question"], p0.data["idRetro"]))
     }
 
 }

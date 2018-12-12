@@ -1,6 +1,7 @@
 package com.rdo.octo.moodmeter
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.gson.Gson
+import com.rdo.octo.moodmeter.CurrentRetroActivity.Companion.EXTRA_ID
 import com.readystatesoftware.chuck.ChuckInterceptor
 import kotlinx.android.synthetic.main.activity_current_retro.*
 import kotlinx.android.synthetic.main.cell_question.view.*
@@ -22,6 +24,8 @@ import java.io.IOException
 class CurrentRetroActivity : AppCompatActivity() {
 
     companion object {
+        const val EXTRA_ID = "extra id yolo"
+
         var usersInRetro: List<User>? = null
         fun setCurrentUsersInRetro(list: List<User>) {
             usersInRetro = list
@@ -37,6 +41,10 @@ class CurrentRetroActivity : AppCompatActivity() {
             client
         } else {
             client
+        }
+
+        fun newIntent(context: Context, id: String): Intent {
+            return Intent(context, CurrentRetroActivity::class.java).putExtra(EXTRA_ID, id)
         }
     }
 
@@ -54,7 +62,8 @@ class CurrentRetroActivity : AppCompatActivity() {
     }
 }
 
-class QuestionAdapter(private val endCallback: () -> Unit, private val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class QuestionAdapter(private val endCallback: () -> Unit,
+                      private val activity: CurrentRetroActivity) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val list = mutableListOf(
         Question(R.drawable.ic_value, "Délivrer de la valeur") to false,
@@ -101,11 +110,12 @@ class QuestionAdapter(private val endCallback: () -> Unit, private val context: 
     }
 
     private fun launchQuestion(title: String) {
+        val idRetro = activity.intent.getStringExtra(EXTRA_ID)
         CurrentRetroActivity.usersInRetro?.forEach {
             launch {
-                val body = Body(it.token, BodyData("message", "title", title))
+                val body = Body(it.token, BodyData("message", "title", title, idRetro))
                 try {
-                    val client = CurrentRetroActivity.getOkhttpClient(this@QuestionAdapter.context)
+                    val client = CurrentRetroActivity.getOkhttpClient(this@QuestionAdapter.activity)
                     val request = Request.Builder()
                         .addHeader("Authorization", "key=AAAAbj2oAkg:APA91bG5kfMrZK0wRUqSFe5qSDuxdkXEv_AECea-GaqAOrxPStBDMaDrCJnrm4aWliPzHJml81vAcwkmH40ooHNswiQ0qhkyF5afAC2MERb-FpIvjjSnPYLFXlOvnJ9wBE0Z5stdD616")
                         .addHeader("Content-Type", "application/json")
@@ -140,5 +150,6 @@ data class Body(
 data class BodyData(
     val message: String,
     val title: String,
-    val question: String
+    val question: String,
+    val idRetro: String?
 )

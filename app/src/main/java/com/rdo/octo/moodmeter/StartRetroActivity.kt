@@ -13,12 +13,17 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_new_retro.*
 import kotlinx.android.synthetic.main.cell_user.view.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.firebase.firestore.DocumentReference
+import com.google.android.gms.tasks.OnSuccessListener
+import org.threeten.bp.LocalDateTime
 
 
 class StartRetroActivity : AppCompatActivity() {
@@ -53,8 +58,34 @@ class StartRetroActivity : AppCompatActivity() {
                 }
         }
         floatingActionButton.setOnClickListener {
-            CurrentRetroActivity.setCurrentUsersInRetro(adapter.getSelectedUsers())
-            startActivity(Intent(this, CurrentRetroActivity::class.java))
+            if (adapter.getSelectedUsers().isNotEmpty()) {
+                goToNextStep()
+            } else {
+                Toast.makeText(this, "On peut pas faire une rétro à 0 narvalo !", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun goToNextStep() {
+        val list = adapter.getSelectedUsers()
+        CurrentRetroActivity.setCurrentUsersInRetro(list)
+        val name = AddUserActivity.getName(this@StartRetroActivity)
+        launch {
+            FirebaseFirestore.getInstance()
+            val idRetro = name + LocalDateTime.now().toString()
+            val retro = mapOf(
+                "idRetro" to idRetro,
+                "users" to list.map { it.token }
+            )
+            db.collection("retro")
+                .add(retro)
+                .addOnSuccessListener { documentReference ->
+                    launch(UI) {
+                        startActivity(CurrentRetroActivity.newIntent(this@StartRetroActivity, idRetro))
+                        finish()
+                    }
+                }
+                .addOnFailureListener { e -> e.printStackTrace() }
         }
     }
 }
