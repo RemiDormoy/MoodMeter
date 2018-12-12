@@ -1,5 +1,6 @@
 package com.rdo.octo.moodmeter
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
@@ -20,7 +21,7 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 
 
-class StartRetroActivity: AppCompatActivity() {
+class StartRetroActivity : AppCompatActivity() {
 
     private val adapter = UserAdapter()
 
@@ -50,6 +51,10 @@ class StartRetroActivity: AppCompatActivity() {
                         task.exception?.printStackTrace()
                     }
                 }
+        }
+        floatingActionButton.setOnClickListener {
+            CurrentRetroActivity.setCurrentUsersInRetro(adapter.getSelectedUsers())
+            startActivity(Intent(this, CurrentRetroActivity::class.java))
         }
     }
 }
@@ -96,6 +101,10 @@ class UserAdapter : RecyclerView.Adapter<UserViewHolder>() {
     fun setList(list: List<User>) {
         this.list = list.map { it to false }.toMutableList()
         notifyDataSetChanged()
+    }
+
+    fun getSelectedUsers(): List<User> {
+        return list.filter { it.second }.map { it.first }
     }
 }
 

@@ -1,6 +1,8 @@
 package com.rdo.octo.moodmeter
 
 import android.animation.ArgbEvaluator
+import android.content.Context
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -12,6 +14,12 @@ import android.util.TypedValue
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        fun newIntent(context: Context, title: String?): Intent {
+            return Intent(context, MainActivity::class.java).putExtra("yolo", title)
+        }
+    }
+
     private val evaluator: ArgbEvaluator by lazy {
         ArgbEvaluator()
     }
@@ -19,6 +27,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        intent.getStringExtra("yolo")?.let {
+            textView.text = it
+        }
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 when (progress) {
