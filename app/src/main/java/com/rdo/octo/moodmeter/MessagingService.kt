@@ -1,5 +1,6 @@
 package com.rdo.octo.moodmeter
 
+import android.content.Context
 import android.content.Intent
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
@@ -9,8 +10,18 @@ import com.google.firebase.messaging.RemoteMessage
 
 class MessagingService : FirebaseMessagingService() {
 
-    override fun onNewToken(p0: String?) {
+    companion object {
+        const val PREF_FCM_TOKEN = "bzrebuvibzreiv"
+
+        fun getToken(context: Context): String? {
+            return context.getSharedPreferences("com.octo.rdo.moodmeter", Context.MODE_PRIVATE).getString(PREF_FCM_TOKEN, "empty")
+        }
+    }
+
+    override fun onNewToken(p0: String) {
         super.onNewToken(p0)
+        val sharedPreferences = getSharedPreferences("com.octo.rdo.moodmeter", Context.MODE_PRIVATE)
+        sharedPreferences.edit().putString(PREF_FCM_TOKEN, p0).apply()
     }
 
     override fun onMessageReceived(p0: RemoteMessage) {
@@ -24,4 +35,5 @@ class MessagingService : FirebaseMessagingService() {
         NotificationManagerCompat.from(this).notify(12, notification)*/
         startActivity(Intent(this, MainActivity::class.java))
     }
+
 }
