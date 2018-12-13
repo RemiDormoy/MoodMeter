@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.firestore.DocumentReference
 import com.google.android.gms.tasks.OnSuccessListener
 import org.threeten.bp.LocalDateTime
+import org.threeten.bp.format.DateTimeFormatter
 
 
 class StartRetroActivity : AppCompatActivity() {
@@ -32,6 +33,10 @@ class StartRetroActivity : AppCompatActivity() {
 
     private val db: FirebaseFirestore by lazy {
         FirebaseFirestore.getInstance()
+    }
+
+    companion object {
+        val dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,7 +77,7 @@ class StartRetroActivity : AppCompatActivity() {
         val name = AddUserActivity.getName(this@StartRetroActivity)
         launch {
             FirebaseFirestore.getInstance()
-            val idRetro = name + LocalDateTime.now().toString()
+            val idRetro = name + "|" + LocalDateTime.now().format(StartRetroActivity.dateFormatter)
             val retro = mapOf(
                 "idRetro" to idRetro,
                 "users" to list.map { it.token }
