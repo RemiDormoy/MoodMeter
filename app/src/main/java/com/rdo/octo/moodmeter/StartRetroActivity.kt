@@ -123,6 +123,9 @@ class UserAdapter : RecyclerView.Adapter<UserViewHolder>() {
             avatarLottieView.playAnimation()
             avatarLottieView.loop(true)
             userCheckBox.isChecked = user.second
+            cellContainer.setOnClickListener {
+                userCheckBox.isChecked = !userCheckBox.isChecked
+            }
             userCheckBox.setOnCheckedChangeListener { _, isChecked ->
                 list[position] = user.first to isChecked
             }

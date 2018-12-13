@@ -10,10 +10,12 @@
 >
 
     <LinearLayout
+            android:id="@+id/cellContainer"
             android:layout_width="match_parent"
             android:gravity="center"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:background="?attr/selectableItemBackground"
             android:padding="16dp">
 
         <FrameLayout android:layout_width="48dp" android:layout_height="48dp">
