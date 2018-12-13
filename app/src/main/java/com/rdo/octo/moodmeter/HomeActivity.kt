@@ -2,7 +2,6 @@ package com.rdo.octo.moodmeter
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -11,14 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.protobuf.Empty
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_home_connected.*
 import kotlinx.android.synthetic.main.activity_home_not_connected.*
 import kotlinx.android.synthetic.main.cell_retro.view.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
 import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 
 class HomeActivity: AppCompatActivity() {
@@ -76,6 +73,9 @@ class HomeActivity: AppCompatActivity() {
                     retroAdapter.setList(list)
                     homeRecyclerView.visibility = View.VISIBLE
                     progressBarHome.visibility = View.GONE
+                    if (list.isEmpty()) {
+
+                    }
                 } else {
                     task.exception?.printStackTrace()
                 }
@@ -116,7 +116,6 @@ class RetroAdapter(private val onClick: (String) -> Unit) : RecyclerView.Adapter
         this.list = list
         notifyDataSetChanged()
     }
-
 }
 
 
