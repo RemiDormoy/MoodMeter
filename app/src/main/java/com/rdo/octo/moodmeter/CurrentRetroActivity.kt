@@ -116,14 +116,16 @@ class QuestionAdapter(private val endCallback: () -> Unit,
                         db.collection("notation")
                             .whereEqualTo("idRetro", idRetro)
                             .whereEqualTo("question", question.title)
-                            .get()
-                            .addOnCompleteListener { task ->
-                                if (task.isSuccessful) {
-                                    val list = task.result?.documents?.filter {
+                            .addSnapshotListener { querySnapshot, e ->
+                                if (e != null || querySnapshot == null) {
+                                    e?.printStackTrace()
+                                    return@addSnapshotListener
+                                } else {
+                                    val list = querySnapshot.documents.filter {
                                         it.data?.get("note") != null //&& it.data?.get("question") == question.title && it.data?.get("idRetro") == idRetro
-                                    }?.map {
+                                    }.map {
                                         it.data!!.get("note") as Long
-                                    } ?: listOf()
+                                    }
                                     val love = list.filter { it > 80 }.size.toFloat() / list.size.toFloat()
                                     val happy = list.filter { it in 61..80 }.size.toFloat() / list.size.toFloat()
                                     val mute = list.filter { it in 41..60 }.size.toFloat() / list.size.toFloat()
@@ -136,11 +138,8 @@ class QuestionAdapter(private val endCallback: () -> Unit,
                                         CategoryDonut.Item(ContextCompat.getColor(this@with.context, android.R.color.holo_purple), mute, ContextCompat.getDrawable(this@with.context, R.drawable.ic_muted)),
                                         CategoryDonut.Item(ContextCompat.getColor(this@with.context, android.R.color.holo_blue_dark), happy, ContextCompat.getDrawable(this@with.context, R.drawable.ic_happy))
                                     ))
-                                } else {
-                                    task.exception?.printStackTrace()
                                 }
                             }
-                            .addOnSuccessListener {  }
                     }
                     val animator = ValueAnimator.ofInt(0, 180)
                     animator.duration = 1000
