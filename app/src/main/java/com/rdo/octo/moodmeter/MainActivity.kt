@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         intent.getStringExtra("yolo")?.let {
             textView.text = it
-            textView4.text = when (it) {
+            textView6.text = when (it) {
                 "Délivrer de la valeur" -> "On délivre des choses top, on en est fiers et notre client est super content !"
                 "Facile à délivrer" -> "Livrer est simple, safe, sans douleur et en grande partie automatique"
                 "Fun" -> "On adore aller bosser et on kiffe bosser ensemble !"
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                 "Support" -> "On a toujours une super aide et un support quand on le demande."
                 else -> "On est une équipe super soudée avec une super collaboration !"
             }
-            textView6.text = when (it) {
+            textView4.text = when (it) {
                 "Délivrer de la valeur" -> "On délivre un caca dont on a honte et que notre client n'aime pas."
                 "Facile à délivrer" -> "Livrer est douloureux, long, risqué et se fait à la mano."
                 "Fun" -> "On se fait chier"
