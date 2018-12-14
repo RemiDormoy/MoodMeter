@@ -138,7 +138,7 @@
             <ImageView
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    app:srcCompat="@drawable/ic_traffic_light_red"
+                    app:srcCompat="@drawable/ic_dislike"
                     android:id="@+id/imageView332"/>
 
             <TextView
@@ -175,7 +175,7 @@
             <ImageView
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    app:srcCompat="@drawable/ic_traffic_light_green"
+                    app:srcCompat="@drawable/ic_like_thumb"
                     android:id="@+id/imageView400"/>
 
             <TextView
