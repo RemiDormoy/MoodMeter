@@ -87,7 +87,10 @@ class QuestionAdapter(private val endCallback: () -> Unit,
         Question(R.drawable.ic_teacher, "Apprentissage") to false,
         Question(R.drawable.ic_mission, "Mission") to false,
         Question(R.drawable.ic_chess, "Pions ou joueurs") to false,
-        Question(R.drawable.ic_running, "Rapidité") to false
+        Question(R.drawable.ic_running, "Rapidité") to false,
+        Question(R.drawable.ic_process, "Process adapté") to false,
+        Question(R.drawable.ic_customer_service, "Support") to false,
+        Question(R.drawable.ic_teamwork, "Travail en équipe") to false
     )
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RecyclerView.ViewHolder {

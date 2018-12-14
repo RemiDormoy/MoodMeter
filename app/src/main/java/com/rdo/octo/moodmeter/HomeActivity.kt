@@ -37,7 +37,7 @@ class HomeActivity: AppCompatActivity() {
     }
 
     private fun onRetroClick(id: String) {
-        Toast.makeText(this, id, Toast.LENGTH_LONG).show()
+        startActivity(PastRetroActivity.newIntent(this, id))
     }
 
     override fun onStart() {
@@ -65,10 +65,11 @@ class HomeActivity: AppCompatActivity() {
                             false
                         }
                     }.map {
-                        val s = (it.data["idRetro"] as String).substringAfter("|")
+                        val idRetro = it.data["idRetro"] as String
+                        val s = idRetro.substringAfter("|")
                         val parse = LocalDate.parse(s, StartRetroActivity.dateFormatter)
                         val date = parse.format(DateTimeFormatter.ofPattern("d MMMM yyyy"))
-                        RetroViewModel(date, (it.data["users"] as List<*>).size)
+                        RetroViewModel(idRetro, date, (it.data["users"] as List<*>).size)
                     }
                     retroAdapter.setList(list)
                     homeRecyclerView.visibility = View.VISIBLE
@@ -84,6 +85,7 @@ class HomeActivity: AppCompatActivity() {
 }
 
 data class RetroViewModel(
+    val id: String,
     val date: String,
     val nbUsers: Int
 )
@@ -105,7 +107,7 @@ class RetroAdapter(private val onClick: (String) -> Unit) : RecyclerView.Adapter
         val retro = list[position]
         with(p0.itemView) {
             cellRetroContainer.setOnClickListener {
-                this@RetroAdapter.onClick(retro.date)
+                this@RetroAdapter.onClick(retro.id)
             }
             dateTextView.text = "Le ${retro.date}"
             nbUserTextView.text = "Avec ${retro.nbUsers} personnes"

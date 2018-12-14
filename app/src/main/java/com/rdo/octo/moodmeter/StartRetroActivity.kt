@@ -36,7 +36,7 @@ class StartRetroActivity : AppCompatActivity() {
     }
 
     companion object {
-        val dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        val dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy/H/m/s")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
